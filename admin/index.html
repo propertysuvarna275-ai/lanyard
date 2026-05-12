@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Corporate Portal - Lanyard Request Management</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+    if (sessionStorage.getItem("adminLoggedIn") !== "true") {
+      window.location.replace("/admin/login/");
+    }
+  </script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "inverse-on-surface": "#ebf1ff",
+            "background": "#f9f9ff",
+            "on-secondary-fixed-variant": "#444749",
+            "on-secondary": "#ffffff",
+            "tertiary-fixed-dim": "#adc6ff",
+            "surface": "#f9f9ff",
+            "on-primary": "#ffffff",
+            "secondary-fixed": "#e1e2e4",
+            "surface-container-low": "#f0f3ff",
+            "surface-tint": "#3755c3",
+            "surface-container": "#e7eefe",
+            "on-primary-fixed-variant": "#173bab",
+            "surface-container-high": "#e2e8f8",
+            "primary": "#00288e",
+            "on-error": "#ffffff",
+            "on-surface-variant": "#444653",
+            "surface-container-lowest": "#ffffff",
+            "on-error-container": "#93000a",
+            "on-surface": "#151c27",
+            "primary-fixed-dim": "#b8c4ff",
+            "inverse-surface": "#2a313d",
+            "surface-bright": "#f9f9ff",
+            "on-tertiary-container": "#9cbbff",
+            "on-tertiary-fixed": "#001a42",
+            "error": "#ba1a1a",
+            "on-secondary-fixed": "#191c1e",
+            "tertiary-fixed": "#d8e2ff",
+            "surface-dim": "#d3daea",
+            "tertiary": "#003272",
+            "on-tertiary": "#ffffff",
+            "error-container": "#ffdad6",
+            "on-secondary-container": "#606365",
+            "secondary": "#5c5f60",
+            "on-background": "#151c27",
+            "surface-container-highest": "#dce2f3",
+            "primary-container": "#1e40af",
+            "outline": "#757684",
+            "secondary-container": "#dee0e2",
+            "secondary-fixed-dim": "#c5c6c8",
+            "tertiary-container": "#00489e",
+            "surface-variant": "#dce2f3",
+            "on-tertiary-fixed-variant": "#004395",
+            "on-primary-fixed": "#001453",
+            "primary-fixed": "#dde1ff",
+            "outline-variant": "#c4c5d5",
+            "inverse-primary": "#b8c4ff",
+            "on-primary-container": "#a8b8ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            md: "1rem",
+            xs: "0.25rem",
+            sm: "0.5rem",
+            gutter: "1.5rem",
+            lg: "1.5rem",
+            base: "4px",
+            xl: "2.5rem",
+            "margin-mobile": "1rem",
+            "container-max": "1280px"
+          },
+          fontFamily: {
+            "body-md": ["Inter"],
+            "headline-md": ["Manrope"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "label-md": ["Inter"],
+            "headline-xl": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "headline-lg-mobile": ["Manrope"]
+          },
+          fontSize: {
+            "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+            "label-md": ["14px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+            "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "0", fontWeight: "700" }],
+            "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "0", fontWeight: "600" }],
+            "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      background-color: #f9f9ff;
+    }
+  </style>
+</head>
+<body class="font-body-md text-on-surface">
+  <header class="bg-surface border-b border-outline-variant sticky top-0 z-50">
+    <nav class="flex justify-between items-center w-full px-gutter max-w-container-max mx-auto h-16">
+      <div class="flex items-center gap-xl">
+        <span class="text-headline-md font-headline-md font-bold text-primary">Corporate Portal</span>
+        <div class="hidden md:flex gap-lg items-center">
+          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/unavailable/">Dashboard</a>
+          <a class="text-primary border-b-2 border-primary pb-1 font-bold font-body-md text-body-md" href="/admin/">Requests</a>
+          <a class="text-on-surface-variant hover:text-primary transition-colors font-body-md text-body-md" href="/unavailable/">Guidelines</a>
+        </div>
+      </div>
+      <div class="flex items-center gap-md">
+        <div class="relative hidden sm:block">
+          <input class="bg-surface-container-lowest border border-outline-variant rounded-lg px-md py-xs pl-10 focus:ring-2 focus:ring-primary-container outline-none transition-all" id="search-input" placeholder="Cari permintaan..." type="search" />
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+        </div>
+        <div class="flex items-center gap-sm">
+          <button aria-label="Notifications" class="p-xs rounded-full hover:bg-surface-container-low transition-all" onclick="window.location.href='/unavailable/'"><span class="material-symbols-outlined text-on-surface-variant">notifications</span></button>
+          <button aria-label="Settings" class="p-xs rounded-full hover:bg-surface-container-low transition-all" onclick="window.location.href='/unavailable/'"><span class="material-symbols-outlined text-on-surface-variant">settings</span></button>
+          <button aria-label="Help" class="p-xs rounded-full hover:bg-surface-container-low transition-all" onclick="window.location.href='/unavailable/'"><span class="material-symbols-outlined text-on-surface-variant">help</span></button>
+        </div>
+        <button class="h-8 w-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant flex items-center justify-center text-primary font-bold text-xs" id="logout-button" title="Logout admin">AD</button>
+      </div>
+    </nav>
+  </header>
+
+  <main class="max-w-container-max mx-auto px-gutter py-xl">
+    <div class="flex flex-col gap-xl">
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-md">
+        <div>
+          <h1 class="font-headline-xl text-headline-xl text-on-surface">Manajemen Permintaan Lanyard</h1>
+          <p class="text-on-surface-variant font-body-lg text-body-lg mt-xs">Kelola dan proses pengajuan ID lanyard karyawan.</p>
+        </div>
+        <div class="flex flex-wrap gap-sm">
+            <button class="bg-surface-container-lowest border border-outline text-on-surface px-md py-sm rounded-lg font-label-md flex items-center gap-xs hover:bg-surface-container-low transition-all" id="export-button">
+            <span class="material-symbols-outlined">download</span> Ekspor Data
+          </button>
+          <button class="bg-primary text-on-primary px-md py-sm rounded-lg font-label-md flex items-center gap-xs hover:opacity-90 transition-all" onclick="window.location.href='/'">
+            <span class="material-symbols-outlined">add</span> Permintaan Baru
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-md">
+        <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl shadow-sm">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Total Permintaan</p>
+              <h3 class="font-headline-lg text-headline-lg mt-sm" id="total-count">0</h3>
+            </div>
+            <div class="p-sm bg-primary-container/10 rounded-lg">
+              <span class="material-symbols-outlined text-primary">assessment</span>
+            </div>
+          </div>
+          <div class="mt-md flex items-center gap-xs text-label-sm text-primary">
+            <span class="material-symbols-outlined text-sm">trending_up</span>
+            <span>+12% dari bulan lalu</span>
+          </div>
+        </section>
+        <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl shadow-sm">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Menunggu Persetujuan</p>
+              <h3 class="font-headline-lg text-headline-lg mt-sm" id="pending-count">0</h3>
+            </div>
+            <div class="p-sm bg-error-container/20 rounded-lg">
+              <span class="material-symbols-outlined text-error">pending_actions</span>
+            </div>
+          </div>
+          <div class="mt-md flex items-center gap-xs text-label-sm text-on-surface-variant">
+            <span>Membutuhkan perhatian segera</span>
+          </div>
+        </section>
+        <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl shadow-sm">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Siap Cetak</p>
+              <h3 class="font-headline-lg text-headline-lg mt-sm" id="print-count">0</h3>
+            </div>
+            <div class="p-sm bg-tertiary-container/10 rounded-lg">
+              <span class="material-symbols-outlined text-tertiary">print</span>
+            </div>
+          </div>
+          <div class="mt-md flex items-center gap-xs text-label-sm text-on-surface-variant">
+            <span>Antrean produksi saat ini</span>
+          </div>
+        </section>
+        <section class="bg-surface-container-lowest border border-outline-variant p-lg rounded-xl shadow-sm">
+          <div class="flex justify-between items-start">
+            <div>
+              <p class="text-label-md text-on-surface-variant uppercase tracking-wider">Selesai</p>
+              <h3 class="font-headline-lg text-headline-lg mt-sm" id="done-count">0</h3>
+            </div>
+            <div class="p-sm bg-surface-variant rounded-lg">
+              <span class="material-symbols-outlined text-on-surface-variant">check_circle</span>
+            </div>
+          </div>
+          <div class="mt-md flex items-center gap-xs text-label-sm text-on-surface-variant">
+            <span>Telah didistribusikan</span>
+          </div>
+        </section>
+      </div>
+
+      <section class="bg-surface-container-lowest border border-outline-variant rounded-xl overflow-hidden shadow-sm">
+        <div class="px-lg py-md border-b border-outline-variant flex flex-col sm:flex-row justify-between items-center gap-md">
+          <div class="flex gap-sm p-1 bg-surface-container rounded-lg">
+            <button class="px-md py-xs rounded-md font-label-md bg-white shadow-sm text-primary" data-filter="ALL">Semua</button>
+            <button class="px-md py-xs rounded-md font-label-md text-on-surface-variant hover:text-primary transition-all" data-filter="PENDING">Menunggu</button>
+            <button class="px-md py-xs rounded-md font-label-md text-on-surface-variant hover:text-primary transition-all" data-filter="APPROVED">Disetujui</button>
+          </div>
+          <div class="flex items-center gap-sm">
+            <span class="text-label-sm text-on-surface-variant">Urutkan:</span>
+            <select class="bg-transparent border-none font-label-md text-on-surface focus:ring-0 cursor-pointer" id="sort-select">
+              <option>Terbaru</option>
+              <option>Terlama</option>
+              <option>Nama A-Z</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead class="bg-surface-container-low">
+              <tr>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Nama Karyawan</th>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Unit</th>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Posisi</th>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Tanggal Masuk</th>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Status</th>
+                <th class="px-lg py-md font-label-md text-on-surface-variant uppercase tracking-wider border-b border-outline-variant">Aksi</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-surface-container" id="requests-body">
+            </tbody>
+          </table>
+        </div>
+
+        <div class="px-lg py-md border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-md">
+          <p class="text-label-sm text-on-surface-variant" id="table-summary">Belum ada data pengajuan</p>
+          <div class="flex gap-xs" id="pagination-controls">
+          </div>
+        </div>
+      </section>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-md">
+        <section class="lg:col-span-2 bg-surface-container-high/50 p-lg rounded-xl border border-outline-variant flex items-center gap-lg">
+          <div class="hidden sm:block">
+            <div class="w-32 h-32 bg-white rounded-lg flex items-center justify-center shadow-sm">
+              <span class="material-symbols-outlined text-6xl text-primary">badge</span>
+            </div>
+          </div>
+          <div>
+            <h4 class="font-headline-md text-headline-md text-primary">Panduan Standar ID Lanyard</h4>
+            <p class="text-body-md text-on-surface-variant mt-sm">Pastikan semua foto yang diunggah memenuhi kriteria pencahayaan 400 lux dengan latar belakang biru solid (#00288E) untuk keseragaman identitas perusahaan.</p>
+          <button class="mt-md text-primary font-label-md flex items-center gap-xs hover:underline" onclick="window.location.href='/unavailable/'">
+              Lihat Dokumen Pedoman <span class="material-symbols-outlined text-sm">open_in_new</span>
+            </button>
+          </div>
+        </section>
+        <section class="bg-primary p-lg rounded-xl flex flex-col justify-between text-on-primary">
+          <div>
+            <span class="material-symbols-outlined text-4xl opacity-80">support_agent</span>
+            <h4 class="font-headline-md text-headline-md mt-sm">Butuh bantuan IT?</h4>
+            <p class="text-body-sm opacity-90 mt-xs">Hubungi tim operasional untuk kendala sistem pencetakan ID.</p>
+          </div>
+          <button class="mt-lg w-full bg-white text-primary font-label-md py-sm rounded-lg hover:bg-opacity-90 transition-all" onclick="window.location.href='/unavailable/'">Hubungi Support</button>
+        </section>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-surface-container-low border-t border-outline-variant mt-xl">
+    <div class="w-full py-md px-gutter flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto gap-md">
+      <div class="flex flex-col md:flex-row items-center gap-md">
+        <span class="font-headline-md text-headline-md text-primary">Corporate Portal</span>
+        <span class="font-label-sm text-label-sm text-secondary">© 2024 Internal Corporate Operations. All rights reserved.</span>
+      </div>
+      <div class="flex flex-wrap justify-center gap-md">
+        <a class="text-label-sm text-secondary hover:text-primary hover:underline transition-colors" href="/unavailable/">Privacy Policy</a>
+        <a class="text-label-sm text-secondary hover:text-primary hover:underline transition-colors" href="/unavailable/">Terms of Service</a>
+        <a class="text-label-sm text-secondary hover:text-primary hover:underline transition-colors" href="/unavailable/">Contact Support</a>
+        <a class="text-label-sm text-secondary hover:text-primary hover:underline transition-colors" href="/unavailable/">Security Guidelines</a>
+      </div>
+    </div>
+  </footer>
+  <div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 px-4" id="detail-modal">
+    <section class="w-full max-w-3xl max-h-[90vh] overflow-y-auto rounded-xl bg-white border border-outline-variant shadow-xl">
+      <div class="flex items-center justify-between border-b border-outline-variant px-lg py-md">
+        <div>
+          <p class="text-label-sm uppercase tracking-wider text-primary">Detail Pengajuan</p>
+          <h2 class="font-headline-md text-headline-md text-on-surface" id="modal-title">Data Karyawan</h2>
+        </div>
+        <button aria-label="Tutup detail" class="p-xs rounded-full hover:bg-surface-container-low" id="close-modal">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-[240px_1fr] gap-lg p-lg">
+        <div class="flex flex-col gap-md">
+          <div class="aspect-[3/4] overflow-hidden rounded-lg border border-outline-variant bg-surface-container-low flex items-center justify-center">
+            <img alt="Foto profil karyawan" class="h-full w-full object-cover hidden" id="modal-photo" />
+            <span class="material-symbols-outlined text-6xl text-on-surface-variant" id="modal-photo-empty">image</span>
+          </div>
+          <button class="w-full rounded-lg bg-primary px-md py-sm font-label-md text-on-primary hover:opacity-90 transition-opacity" id="download-photo-button">
+            Unduh Foto Lanyard
+          </button>
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-md content-start">
+          <div class="rounded-lg border border-outline-variant p-md">
+            <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Nama Lengkap</p>
+            <p class="mt-xs font-semibold" id="modal-name">-</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant p-md">
+            <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Unit</p>
+            <p class="mt-xs font-semibold" id="modal-unit">-</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant p-md">
+            <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Posisi</p>
+            <p class="mt-xs font-semibold" id="modal-position">-</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant p-md">
+            <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Tanggal Masuk</p>
+            <p class="mt-xs font-semibold" id="modal-date">-</p>
+          </div>
+          <div class="rounded-lg border border-outline-variant p-md">
+            <p class="text-label-sm uppercase tracking-wider text-on-surface-variant">Status</p>
+            <p class="mt-xs font-semibold" id="modal-status">-</p>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col sm:flex-row justify-end gap-sm border-t border-outline-variant px-lg py-md">
+        <button class="rounded-lg border border-outline px-md py-sm font-label-md hover:bg-surface-container-low transition-colors" id="modal-print-ready">Tandai Siap Cetak</button>
+        <button class="rounded-lg border border-outline px-md py-sm font-label-md hover:bg-surface-container-low transition-colors" id="modal-done">Tandai Selesai</button>
+        <button class="rounded-lg bg-primary px-md py-sm font-label-md text-on-primary hover:opacity-90 transition-opacity" id="modal-approve">Setuju</button>
+        <button class="rounded-lg bg-error px-md py-sm font-label-md text-on-error hover:opacity-90 transition-opacity" id="modal-reject">Tolak</button>
+      </div>
+    </section>
+  </div>
+  <script>
+    let activeFilter = "ALL";
+    let activeRequestId = null;
+    let currentPage = 1;
+    const pageSize = 5;
+    let requests = [];
+
+    const requestsBody = document.getElementById("requests-body");
+    const searchInput = document.getElementById("search-input");
+    const sortSelect = document.getElementById("sort-select");
+    const tableSummary = document.getElementById("table-summary");
+    const exportButton = document.getElementById("export-button");
+    const filterButtons = document.querySelectorAll("[data-filter]");
+    const paginationControls = document.getElementById("pagination-controls");
+    const modal = document.getElementById("detail-modal");
+
+    function getRequests() {
+      return requests;
+    }
+
+    async function loadRequests() {
+      const response = await fetch("/api/requests");
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.error || "Data gagal dimuat dari database.");
+      }
+
+      requests = result.data || [];
+    }
+
+    function formatDate(value) {
+      if (!value) return "-";
+      return new Intl.DateTimeFormat("id-ID", {
+        day: "2-digit",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      }).format(new Date(value));
+    }
+
+    function escapeHtml(value) {
+      return String(value ?? "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function initials(name) {
+      return name
+        .split(" ")
+        .filter(Boolean)
+        .slice(0, 2)
+        .map((part) => part[0].toUpperCase())
+        .join("") || "ID";
+    }
+
+    function statusBadge(status) {
+      const styles = {
+        PENDING: "bg-amber-100 text-amber-800 border-amber-200",
+        APPROVED: "bg-green-100 text-green-800 border-green-200",
+        REJECTED: "bg-red-100 text-red-800 border-red-200",
+        "PRINT READY": "bg-blue-100 text-blue-800 border-blue-200",
+        DONE: "bg-surface-variant text-on-surface-variant border-outline-variant"
+      };
+      return `<span class="px-sm py-1 rounded-full text-xs font-bold border ${styles[status] || styles.PENDING}">${status}</span>`;
+    }
+
+    function renderPagination(totalItems) {
+      const pageCount = Math.max(1, Math.ceil(totalItems / pageSize));
+      currentPage = Math.min(currentPage, pageCount);
+      const pages = Array.from({ length: pageCount }, (_, index) => index + 1);
+
+      paginationControls.innerHTML = `
+        <button aria-label="Previous page" class="p-xs rounded border border-outline-variant hover:bg-surface-container transition-all disabled:opacity-40 disabled:cursor-not-allowed" data-page-action="prev" ${currentPage === 1 ? "disabled" : ""}><span class="material-symbols-outlined">chevron_left</span></button>
+        ${pages.map((page) => `
+          <button class="px-sm py-xs rounded border font-label-sm ${page === currentPage ? "border-primary bg-primary text-on-primary" : "border-outline-variant hover:bg-surface-container transition-all"}" data-page="${page}">${page}</button>
+        `).join("")}
+        <button aria-label="Next page" class="p-xs rounded border border-outline-variant hover:bg-surface-container transition-all disabled:opacity-40 disabled:cursor-not-allowed" data-page-action="next" ${currentPage === pageCount ? "disabled" : ""}><span class="material-symbols-outlined">chevron_right</span></button>
+      `;
+    }
+
+    function filteredRequests() {
+      const query = searchInput.value.trim().toLowerCase();
+      const selectedSort = sortSelect.value;
+      let data = getRequests().filter((request) => {
+        const matchesFilter = activeFilter === "ALL" || request.status === activeFilter;
+        const haystack = `${request.fullName} ${request.unit} ${request.position}`.toLowerCase();
+        return matchesFilter && haystack.includes(query);
+      });
+
+      data.sort((a, b) => {
+        if (selectedSort === "Terlama") return new Date(a.submittedAt) - new Date(b.submittedAt);
+        if (selectedSort === "Nama A-Z") return a.fullName.localeCompare(b.fullName);
+        return new Date(b.submittedAt) - new Date(a.submittedAt);
+      });
+
+      return data;
+    }
+
+    function renderStats() {
+      const requests = getRequests();
+      document.getElementById("total-count").textContent = requests.length;
+      document.getElementById("pending-count").textContent = requests.filter((item) => item.status === "PENDING").length;
+      document.getElementById("print-count").textContent = requests.filter((item) => item.status === "PRINT READY").length;
+      document.getElementById("done-count").textContent = requests.filter((item) => item.status === "DONE").length;
+    }
+
+    function renderTable() {
+      const data = filteredRequests();
+      renderStats();
+      renderPagination(data.length);
+
+      if (!data.length) {
+        requestsBody.innerHTML = `
+          <tr>
+            <td class="px-lg py-xl text-center text-on-surface-variant" colspan="7">
+              Belum ada data pengajuan lanyard. Data akan muncul otomatis setelah user mengirim formulir.
+            </td>
+          </tr>
+        `;
+        tableSummary.textContent = "Belum ada data pengajuan";
+        return;
+      }
+
+      const start = (currentPage - 1) * pageSize;
+      const visibleData = data.slice(start, start + pageSize);
+
+      requestsBody.innerHTML = visibleData.map((request) => `
+        <tr class="hover:bg-surface-container-lowest transition-colors">
+          <td class="px-lg py-md">
+            <div class="flex items-center gap-sm">
+              <div class="w-8 h-8 rounded-full bg-secondary-container flex items-center justify-center text-on-secondary-container font-bold text-xs">${escapeHtml(initials(request.fullName))}</div>
+              <div>
+                <p class="font-body-md text-on-surface font-semibold">${escapeHtml(request.fullName)}</p>
+                <p class="text-label-sm text-on-surface-variant">${escapeHtml(request.photoName || "Foto belum tersedia")}</p>
+              </div>
+            </div>
+          </td>
+          <td class="px-lg py-md text-body-sm">${escapeHtml(request.unit)}</td>
+          <td class="px-lg py-md text-body-sm">${escapeHtml(request.position)}</td>
+          <td class="px-lg py-md text-body-sm">${formatDate(request.submittedAt)}</td>
+          <td class="px-lg py-md">${statusBadge(request.status)}</td>
+          <td class="px-lg py-md">
+            <div class="flex flex-wrap items-center gap-md">
+              <button class="text-primary hover:underline font-label-sm" data-action="detail" data-id="${request.id}">Detail</button>
+              <button class="text-green-700 hover:underline font-label-sm ${request.status !== "PENDING" ? "opacity-50 cursor-not-allowed" : ""}" data-action="approve" data-id="${request.id}" ${request.status !== "PENDING" ? "disabled" : ""}>Setuju</button>
+              <button class="text-error hover:underline font-label-sm ${request.status !== "PENDING" ? "opacity-50 cursor-not-allowed" : ""}" data-action="reject" data-id="${request.id}" ${request.status !== "PENDING" ? "disabled" : ""}>Tolak</button>
+              <button class="text-primary hover:underline font-label-sm" data-action="download-photo" data-id="${request.id}">Unduh Foto</button>
+            </div>
+          </td>
+        </tr>
+      `).join("");
+
+      tableSummary.textContent = `Menampilkan ${start + 1}-${start + visibleData.length} dari ${data.length} permintaan`;
+    }
+
+    async function updateStatus(id, status) {
+      const response = await fetch("/api/requests", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id, status })
+      });
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        alert(result.error || "Status gagal diperbarui.");
+        return;
+      }
+
+      requests = requests.map((request) => (
+        request.id === id ? result.data : request
+      ));
+      renderTable();
+      if (activeRequestId === id) openDetail(id);
+    }
+
+    function downloadDataUrl(dataUrl, filename) {
+      const link = document.createElement("a");
+      link.href = dataUrl;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function getPhotoSource(request) {
+      if (request.photoPathname) {
+        return `/api/file?pathname=${encodeURIComponent(request.photoPathname)}`;
+      }
+
+      return request.photoUrl || request.photoDataUrl;
+    }
+
+    function downloadPhoto(id) {
+      const request = getRequests().find((item) => item.id === id);
+      if (!request || (!request.photoPathname && !request.photoUrl && !request.photoDataUrl)) return;
+      const extension = request.photoName?.split(".").pop() || "png";
+      const link = document.createElement("a");
+      link.href = getPhotoSource(request);
+      link.download = `${request.unit}-${request.fullName.replace(/\s+/g, "-")}.${extension}`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }
+
+    function openDetail(id) {
+      const request = getRequests().find((item) => item.id === id);
+      if (!request) return;
+      activeRequestId = id;
+
+      document.getElementById("modal-title").textContent = request.fullName;
+      document.getElementById("modal-name").textContent = request.fullName;
+      document.getElementById("modal-unit").textContent = request.unit;
+      document.getElementById("modal-position").textContent = request.position;
+      document.getElementById("modal-date").textContent = formatDate(request.submittedAt);
+      document.getElementById("modal-status").innerHTML = statusBadge(request.status);
+
+      const photo = document.getElementById("modal-photo");
+      const empty = document.getElementById("modal-photo-empty");
+      if (request.photoPathname || request.photoUrl || request.photoDataUrl) {
+        photo.src = getPhotoSource(request);
+        photo.classList.remove("hidden");
+        empty.classList.add("hidden");
+      } else {
+        photo.classList.add("hidden");
+        empty.classList.remove("hidden");
+      }
+
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+    }
+
+    function closeDetail() {
+      modal.classList.add("hidden");
+      modal.classList.remove("flex");
+      activeRequestId = null;
+    }
+
+    document.getElementById("modal-photo").addEventListener("error", () => {
+      const request = getRequests().find((item) => item.id === activeRequestId);
+      const photo = document.getElementById("modal-photo");
+
+      if (request?.photoUrl && photo.src !== request.photoUrl) {
+        photo.src = request.photoUrl;
+        return;
+      }
+
+      photo.classList.add("hidden");
+      document.getElementById("modal-photo-empty").classList.remove("hidden");
+    });
+
+    function exportCsv() {
+      const requests = getRequests();
+      const rows = [
+        ["Nama Lengkap", "Unit", "Posisi", "Tanggal Masuk", "Status", "Nama File Foto"],
+        ...requests.map((request) => [
+          request.fullName,
+          request.unit,
+          request.position,
+          formatDate(request.submittedAt),
+          request.status,
+          request.photoName || ""
+        ])
+      ];
+      const csv = rows.map((row) => row.map((cell) => `"${String(cell).replaceAll('"', '""')}"`).join(",")).join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      downloadDataUrl(url, "data-pengajuan-lanyard.csv");
+      URL.revokeObjectURL(url);
+    }
+
+    async function refreshAdminData() {
+      try {
+        await loadRequests();
+        renderTable();
+      } catch (error) {
+        requestsBody.innerHTML = `
+          <tr>
+            <td class="px-lg py-xl text-center text-error" colspan="7">
+              ${escapeHtml(error.message)}
+            </td>
+          </tr>
+        `;
+        tableSummary.textContent = "Database belum tersambung";
+        renderStats();
+        renderPagination(0);
+      }
+    }
+
+    requestsBody.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-action]");
+      if (!button) return;
+      const id = button.dataset.id;
+      if (button.dataset.action === "detail") openDetail(id);
+      if (button.dataset.action === "approve") updateStatus(id, "APPROVED");
+      if (button.dataset.action === "reject") updateStatus(id, "REJECTED");
+      if (button.dataset.action === "download-photo") downloadPhoto(id);
+    });
+
+    filterButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        activeFilter = button.dataset.filter;
+        currentPage = 1;
+        filterButtons.forEach((item) => item.className = "px-md py-xs rounded-md font-label-md text-on-surface-variant hover:text-primary transition-all");
+        button.className = "px-md py-xs rounded-md font-label-md bg-white shadow-sm text-primary";
+        renderTable();
+      });
+    });
+
+    paginationControls.addEventListener("click", (event) => {
+      const button = event.target.closest("button");
+      if (!button) return;
+      if (button.dataset.page) currentPage = Number(button.dataset.page);
+      if (button.dataset.pageAction === "prev") currentPage -= 1;
+      if (button.dataset.pageAction === "next") currentPage += 1;
+      renderTable();
+    });
+
+    searchInput.addEventListener("input", () => {
+      currentPage = 1;
+      renderTable();
+    });
+    sortSelect.addEventListener("change", () => {
+      currentPage = 1;
+      renderTable();
+    });
+    exportButton.addEventListener("click", exportCsv);
+    document.getElementById("logout-button").addEventListener("click", () => {
+      sessionStorage.removeItem("adminLoggedIn");
+      window.location.href = "/admin/login/";
+    });
+    document.getElementById("close-modal").addEventListener("click", closeDetail);
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeDetail();
+    });
+    document.getElementById("download-photo-button").addEventListener("click", () => downloadPhoto(activeRequestId));
+    document.getElementById("modal-approve").addEventListener("click", () => updateStatus(activeRequestId, "APPROVED"));
+    document.getElementById("modal-reject").addEventListener("click", () => updateStatus(activeRequestId, "REJECTED"));
+    document.getElementById("modal-print-ready").addEventListener("click", () => updateStatus(activeRequestId, "PRINT READY"));
+    document.getElementById("modal-done").addEventListener("click", () => updateStatus(activeRequestId, "DONE"));
+
+    refreshAdminData();
+  </script>
+</body>
+</html>

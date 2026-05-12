@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html class="light" lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Corporate Portal - Lanyard Request</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Manrope:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "outline-variant": "#c4c5d5",
+            "surface-container-highest": "#dce2f3",
+            "inverse-primary": "#b8c4ff",
+            "on-surface-variant": "#444653",
+            "primary-fixed": "#dde1ff",
+            "on-tertiary-container": "#9cbbff",
+            "surface": "#f9f9ff",
+            "on-error": "#ffffff",
+            "on-background": "#151c27",
+            "on-primary": "#ffffff",
+            "surface-tint": "#3755c3",
+            "surface-container-low": "#f0f3ff",
+            "on-secondary": "#ffffff",
+            "error": "#ba1a1a",
+            "primary": "#00288e",
+            "inverse-on-surface": "#ebf1ff",
+            "inverse-surface": "#2a313d",
+            "outline": "#757684",
+            "on-secondary-fixed-variant": "#444749",
+            "on-secondary-container": "#606365",
+            "background": "#f9f9ff",
+            "on-tertiary-fixed": "#001a42",
+            "secondary-container": "#dee0e2",
+            "primary-container": "#1e40af",
+            "surface-bright": "#f9f9ff",
+            "primary-fixed-dim": "#b8c4ff",
+            "on-primary-fixed": "#001453",
+            "surface-container": "#e7eefe",
+            "on-tertiary": "#ffffff",
+            "secondary-fixed": "#e1e2e4",
+            "tertiary-fixed": "#d8e2ff",
+            "secondary": "#5c5f60",
+            "on-error-container": "#93000a",
+            "on-primary-container": "#a8b8ff",
+            "surface-container-lowest": "#ffffff",
+            "surface-variant": "#dce2f3",
+            "surface-dim": "#d3daea",
+            "secondary-fixed-dim": "#c5c6c8",
+            "on-tertiary-fixed-variant": "#004395",
+            "tertiary": "#003272",
+            "on-surface": "#151c27",
+            "on-primary-fixed-variant": "#173bab",
+            "surface-container-high": "#e2e8f8",
+            "tertiary-container": "#00489e",
+            "on-secondary-fixed": "#191c1e",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#adc6ff"
+          },
+          borderRadius: {
+            DEFAULT: "0.25rem",
+            lg: "0.5rem",
+            xl: "0.75rem",
+            full: "9999px"
+          },
+          spacing: {
+            md: "1rem",
+            sm: "0.5rem",
+            "container-max": "1280px",
+            lg: "1.5rem",
+            xs: "0.25rem",
+            "margin-mobile": "1rem",
+            base: "4px",
+            xl: "2.5rem",
+            gutter: "1.5rem"
+          },
+          fontFamily: {
+            "label-sm": ["Inter"],
+            "headline-xl": ["Manrope"],
+            "label-md": ["Inter"],
+            "body-sm": ["Inter"],
+            "headline-md": ["Manrope"],
+            "headline-lg": ["Manrope"],
+            "body-lg": ["Inter"],
+            "headline-lg-mobile": ["Manrope"],
+            "body-md": ["Inter"]
+          },
+          fontSize: {
+            "label-sm": ["12px", { lineHeight: "16px", fontWeight: "600" }],
+            "headline-xl": ["36px", { lineHeight: "44px", letterSpacing: "0", fontWeight: "700" }],
+            "label-md": ["14px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "500" }],
+            "body-sm": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+            "headline-lg": ["28px", { lineHeight: "36px", letterSpacing: "0", fontWeight: "600" }],
+            "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "headline-lg-mobile": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+            "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }]
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      background-color: #f9f9ff;
+    }
+
+    .file-drop input {
+      inset: 0;
+      opacity: 0;
+      position: absolute;
+    }
+
+    .loading-spinner {
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col font-body-md text-on-surface">
+  <header class="bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-50">
+    <div class="flex justify-between items-center w-full px-lg py-md max-w-container-max mx-auto">
+      <div class="flex items-center gap-xl">
+        <span class="text-headline-md font-headline-md font-bold text-primary">Corporate Portal</span>
+        <nav class="hidden md:flex items-center gap-lg">
+          <a class="text-secondary font-medium hover:text-primary-container transition-colors duration-200 text-label-md font-label-md" href="unavailable/">Dashboard</a>
+          <a class="text-primary border-b-2 border-primary font-bold pb-1 text-label-md font-label-md" href="./">Requests</a>
+          <a class="text-secondary font-medium hover:text-primary-container transition-colors duration-200 text-label-md font-label-md" href="unavailable/">Guidelines</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-md">
+        <button aria-label="Notifications" class="p-sm rounded-full hover:bg-surface-variant transition-colors duration-150" onclick="window.location.href='unavailable/'">
+          <span class="material-symbols-outlined text-primary">notifications</span>
+        </button>
+        <button aria-label="Help" class="p-sm rounded-full hover:bg-surface-variant transition-colors duration-150" onclick="window.location.href='unavailable/'">
+          <span class="material-symbols-outlined text-primary">help</span>
+        </button>
+        <div class="w-8 h-8 rounded-full bg-primary-fixed border border-outline-variant flex items-center justify-center text-primary font-bold text-xs">CP</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow flex items-center justify-center py-xl px-margin-mobile">
+    <div class="w-full max-w-[800px]">
+      <div class="bg-surface-container-lowest border border-outline-variant rounded-lg p-xl md:p-[48px] shadow-sm">
+        <div class="mb-xl text-center md:text-left">
+          <h1 class="text-headline-lg font-headline-lg text-on-surface mb-xs">Formulir Pengajuan Lanyard Karyawan</h1>
+          <p class="text-body-md text-secondary">Silakan isi data di bawah ini untuk pencetakan lanyard resmi perusahaan.</p>
+        </div>
+
+        <form class="space-y-lg" id="lanyard-form">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-md text-on-surface text-[14px]" for="full_name">Nama Lengkap</label>
+              <input class="w-full h-12 px-md border border-outline rounded-lg bg-surface-container-lowest focus:ring-4 focus:ring-primary-fixed focus:border-primary transition-all duration-200 outline-none" id="full_name" name="full_name" placeholder="Contoh: Budi Santoso" required type="text" />
+            </div>
+            <div class="flex flex-col gap-xs">
+              <label class="font-label-md text-on-surface text-[14px]" for="unit">Unit</label>
+              <select class="w-full h-12 px-md border border-outline rounded-lg bg-surface-container-lowest focus:ring-4 focus:ring-primary-fixed focus:border-primary transition-all duration-200 outline-none" id="unit" name="unit" required>
+                <option disabled selected value="">Pilih Unit</option>
+                <option value="Cafe">Cafe</option>
+                <option value="Properti">Properti</option>
+              </select>
+            </div>
+            <div class="flex flex-col gap-xs md:col-span-2">
+              <label class="font-label-md text-on-surface text-[14px]" for="position">Posisi</label>
+              <input class="w-full h-12 px-md border border-outline rounded-lg bg-surface-container-lowest focus:ring-4 focus:ring-primary-fixed focus:border-primary transition-all duration-200 outline-none" id="position" name="position" placeholder="Contoh: Staff Operasional" required type="text" />
+            </div>
+          </div>
+
+          <div class="flex flex-col gap-xs pt-md">
+            <label class="font-label-md text-on-surface text-[14px] flex items-center gap-xs" for="profile_photo">
+              Upload Foto Profil 
+              <span class="material-symbols-outlined text-[16px] text-primary" title="Foto akan digunakan untuk kartu identitas resmi">info</span>
+            </label>
+            <label class="file-drop relative border-2 border-dashed border-outline-variant rounded-lg p-xl flex flex-col items-center justify-center bg-surface hover:bg-surface-container transition-colors duration-200 cursor-pointer group">
+              <input accept=".jpg,.jpeg,.png,image/jpeg,image/png" id="profile_photo" name="profile_photo" type="file" />
+              <span class="w-16 h-16 rounded-full bg-primary-fixed flex items-center justify-center mb-md group-hover:scale-110 transition-transform duration-200">
+                <span class="material-symbols-outlined text-primary text-[32px]">upload</span>
+              </span>
+              <span class="text-body-md font-semibold text-on-surface mb-xs">Tarik dan lepas foto di sini</span>
+              <span class="text-body-sm text-secondary" id="photo_file_label">Atau klik untuk memilih file dari komputer</span>
+              <span class="text-label-sm text-outline mt-md text-center">Gunakan foto formal dengan latar belakang biru/merah, format .jpg atau .png, resolusi minimal 300x400 piksel, dan ukuran file maksimal 2MB.</span>
+            </label>
+          </div>
+
+          <div class="flex flex-col md:flex-row items-center justify-end gap-md pt-xl border-t border-outline-variant">
+            <button class="w-full md:w-auto px-xl py-md border border-outline rounded-lg text-on-surface font-semibold hover:bg-surface-container-high transition-colors duration-200" type="reset">Batal</button>
+            <button class="w-full md:w-auto px-xl py-md bg-primary text-white rounded-lg font-semibold hover:opacity-90 active:opacity-70 transition-all duration-200 shadow-sm" type="submit">Kirim Data</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+
+  <div class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 px-4" id="submit-modal">
+    <section class="w-full max-w-sm rounded-xl bg-white border border-outline-variant shadow-xl p-xl text-center">
+      <div class="mx-auto flex h-20 w-20 items-center justify-center rounded-full bg-primary-fixed" id="modal-icon-wrap">
+        <span class="loading-spinner h-10 w-10 rounded-full border-4 border-primary-fixed-dim border-t-primary" id="modal-spinner"></span>
+        <span class="material-symbols-outlined hidden text-[44px] text-green-700" id="modal-success-icon">check_circle</span>
+        <span class="material-symbols-outlined hidden text-[44px] text-error" id="modal-error-icon">error</span>
+      </div>
+      <h2 class="mt-lg font-headline-md text-headline-md text-on-surface" id="modal-title">Mengirim Data</h2>
+      <p class="mt-sm text-body-sm text-on-surface-variant" id="modal-description">Mohon tunggu, foto dan data sedang diproses.</p>
+      <button class="mt-lg hidden w-full rounded-lg bg-primary px-md py-sm font-semibold text-white hover:opacity-90 transition-opacity" id="modal-close-button" type="button">Tutup</button>
+    </section>
+  </div>
+
+  <div class="fixed bottom-0 right-0 p-xl pointer-events-none opacity-10 hidden lg:block">
+    <span class="material-symbols-outlined text-[300px] text-primary">badge</span>
+  </div>
+
+  <footer class="bg-secondary-container border-t border-outline-variant mt-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center w-full px-lg py-xl max-w-container-max mx-auto gap-lg">
+      <div class="flex flex-col gap-xs items-center md:items-start">
+        <span class="text-label-sm font-label-sm font-bold uppercase tracking-wider text-on-secondary-container">INTERNAL CORPORATE OPERATIONS</span>
+        <p class="text-body-sm font-body-sm text-on-secondary-container opacity-80">© 2024 Internal Corporate Operations. Support available 24/7.</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-lg">
+        <a class="text-secondary text-body-sm font-body-sm hover:underline hover:text-on-surface transition-all duration-200" href="unavailable/">Contact Support</a>
+        <a class="text-secondary text-body-sm font-body-sm hover:underline hover:text-on-surface transition-all duration-200" href="unavailable/">Policy Manual</a>
+        <a class="text-secondary text-body-sm font-body-sm hover:underline hover:text-on-surface transition-all duration-200" href="unavailable/">IT Helpdesk</a>
+      </div>
+    </div>
+  </footer>
+  <script>
+    const form = document.getElementById("lanyard-form");
+    const photoInput = document.getElementById("profile_photo");
+    const photoLabel = document.getElementById("photo_file_label");
+    const submitModal = document.getElementById("submit-modal");
+    const modalSpinner = document.getElementById("modal-spinner");
+    const modalSuccessIcon = document.getElementById("modal-success-icon");
+    const modalErrorIcon = document.getElementById("modal-error-icon");
+    const modalTitle = document.getElementById("modal-title");
+    const modalDescription = document.getElementById("modal-description");
+    const modalCloseButton = document.getElementById("modal-close-button");
+
+    function openSubmitModal(state, title, description) {
+      submitModal.classList.remove("hidden");
+      submitModal.classList.add("flex");
+      modalTitle.textContent = title;
+      modalDescription.textContent = description;
+
+      modalSpinner.classList.toggle("hidden", state !== "loading");
+      modalSuccessIcon.classList.toggle("hidden", state !== "success");
+      modalErrorIcon.classList.toggle("hidden", state !== "error");
+      modalCloseButton.classList.toggle("hidden", state === "loading");
+    }
+
+    function closeSubmitModal() {
+      submitModal.classList.add("hidden");
+      submitModal.classList.remove("flex");
+    }
+
+    async function createRequest(data) {
+      const response = await fetch("/api/requests", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.error || "Data gagal dikirim ke database.");
+      }
+
+      return result.data;
+    }
+
+    async function uploadPhoto(file) {
+      const response = await fetch(`/api/upload?filename=${encodeURIComponent(file.name)}`, {
+        method: "POST",
+        headers: { "Content-Type": file.type || "application/octet-stream" },
+        body: file
+      });
+
+      const result = await response.json().catch(() => ({}));
+
+      if (!response.ok) {
+        throw new Error(result.error || "Foto gagal di-upload ke Blob.");
+      }
+
+      return result;
+    }
+
+    photoInput.addEventListener("change", () => {
+      photoLabel.textContent = photoInput.files[0]
+        ? photoInput.files[0].name
+        : "Atau klik untuk memilih file dari komputer";
+    });
+
+    form.addEventListener("reset", () => {
+      photoLabel.textContent = "Atau klik untuk memilih file dari komputer";
+    });
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const file = photoInput.files[0];
+      if (!file) {
+        openSubmitModal("error", "Foto Belum Diunggah", "Mohon upload foto profil terlebih dahulu.");
+        return;
+      }
+
+      if (file.size > 2 * 1024 * 1024) {
+        openSubmitModal("error", "Ukuran Foto Terlalu Besar", "Ukuran foto maksimal 2MB.");
+        return;
+      }
+
+      try {
+        openSubmitModal("loading", "Mengirim Data", "Mohon tunggu, foto dan data sedang diproses.");
+        const uploadedPhoto = await uploadPhoto(file);
+        const data = {
+          fullName: document.getElementById("full_name").value.trim(),
+          unit: document.getElementById("unit").value,
+          position: document.getElementById("position").value.trim(),
+          photoName: file.name,
+          photoType: file.type || "image/png",
+          photoUrl: uploadedPhoto.url,
+          photoPathname: uploadedPhoto.pathname,
+          photoAccess: uploadedPhoto.access
+        };
+
+        await createRequest(data);
+        form.reset();
+        photoLabel.textContent = "Atau klik untuk memilih file dari komputer";
+        openSubmitModal("success", "Data Berhasil Terkirim", "Pengajuan lanyard kamu sudah masuk dan dapat dilihat oleh admin.");
+      } catch (error) {
+        openSubmitModal("error", "Data Gagal Dikirim", error.message);
+      }
+    });
+
+    modalCloseButton.addEventListener("click", closeSubmitModal);
+  </script>
+</body>
+</html>

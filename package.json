@@ -1,0 +1,16 @@
+{
+  "name": "lanyard-request-portal",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@vercel/blob": "^2.3.0",
+    "postgres": "^3.4.5"
+  },
+  "devDependencies": {
+    "vercel": "^37.0.0"
+  }
+}
